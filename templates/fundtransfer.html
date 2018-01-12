@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pig Pocket|Fund Transfer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <style>
+ body {
+        font-family: "Lato", sans-serif;
+    }
+
+       table{width:70%;border-collapse: collapse;margin:auto;}
+
+       #customers {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 70%;
+}
+
+        #customers td, #customers th {
+        border: 1px solid #ddd;
+        padding: 8px;
+}
+
+        #customers tr:nth-child(even){background-color: #f2f2f2;}
+
+        #customers tr:hover {background-color: #ddd;}
+
+        #customers th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: mediumpurple;
+        color: white;
+}
+
+  #myInput {
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 70%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+  margin-left:15%;
+}
+
+#customers {
+  border-collapse: collapse;
+  width: 70%;
+  border: 1px solid #ddd;
+  font-size: 18px;
+}
+
+#customers th, #customers td {
+  text-align: left;
+  padding: 12px;
+}
+
+#customers tr {
+  border-bottom: 1px solid #ddd;
+}
+
+#customers tr.header, #customers tr:hover {
+  background-color: #f1f1f1;
+}
+
+h2{ background-color: pink;
+text-align: left}
+
+        .mySearch {
+			background-image: url('/static/images/search.png');
+			background-position: 14px 12px;
+			background-size: 2% 40%;
+			background-repeat: no-repeat;
+			font-size: 16px;
+			padding: 14px 20px 12px 45px;
+			border: none;
+		}
+    </style>
+</head>
+<body>
+    {% extends 'layout.html' %}
+    {% block body %}
+        <input type="text" id="myInput" class="mySearch" onkeyup="search();" placeholder="Search for transactions..">
+
+        <table border="1" id="customers" style="width:70%;">
+        <th colspan="5">Fund Transfer Details:</th>
+        <tr class="header"><td>Date:</td><td>Bank details</td><td>Transaction details:</td><td>Deposit</td><td>Withdrawal</td></tr>
+        <tr><td>11 Dec</td><td>Posb savings 123-45678-9</td><td>Shopee</td><td></td><td>$49.87</td></tr>
+        <tr><td>9 Dec</td><td>Ocbc savings 40292-29283-0</td><td>CareerBuild</td><td>$2089.79</td><td></td></tr>
+        <tr><td>3 Dec</td><td>UOB i-account 107-55560-9</td><td>Carousell</td><td></td><td>98.98</td></tr>
+        <tr><td>2 Dec</td><td>Posb savings 123-45678-9</td><td>TransitLink</td><td></td><td>$20.00</td></tr>
+    </table>
+            <br>
+            <button onclick="document.getElementById('popout').style.display='block'" class="w3-button w3-black" style="margin-left: 15%;">
+                Add fund transfer</button>
+
+              <div id="popout" class="w3-modal">
+        <div class="w3-modal-content">
+          <div class="w3-container">
+            <span onclick="document.getElementById('popout').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+              <h2>To:</h2>
+
+            Recipient Name: <input type="text" id="name"/>
+
+              <br><br>
+
+            Recipient Account Type:
+              <select id="bank">
+              <option>POSB</option>
+              <option>DBS</option>
+              <option>UOB</option>
+              <option>OCBC</option>
+              </select>
+
+              <br><br>
+
+            Recipient Account Number: <input type="text" id="acc"/>
+              <br><br>
+
+             <h2>From:</h2>
+            My Account:<select id="types">
+              <option value="POSB">POSB Savings 123-456-78-9</option>
+              <option value="OCBC">OCBC savings 40292-29283-0 </option>
+              <option value="UOB">UOB i-account 107-55560-9</option>
+          </select>
+
+              <br><br>
+
+            Amount: <input type="text" id="amount"/>
+
+              <br><br>
+          <button onclick="submit()">Submit</button>
+
+
+
+
+          </div>
+        </div>
+      </div>
+
+
+
+       <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+        </script>
+
+
+    <script>
+    function search() {
+      var input, filter, table, tr, td1,td2,td3,td4,td5, i;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("customers");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td1 = tr[i].getElementsByTagName("td")[0];
+        td2 = tr[i].getElementsByTagName("td")[1];
+        td3 = tr[i].getElementsByTagName("td")[2];
+        td4 = tr[i].getElementsByTagName("td")[3];
+        td5 = tr[i].getElementsByTagName("td")[4];
+
+        if (td1) {
+          if (td1.innerHTML.toUpperCase().indexOf(filter) > -1||td2.innerHTML.toUpperCase().indexOf(filter) > -1||td3.innerHTML.toUpperCase().indexOf(filter) > -1
+          ||td4.innerHTML.toUpperCase().indexOf(filter) > -1||td5.innerHTML.toUpperCase().indexOf(filter) > -1) {
+              tr[1].style.display="";
+              tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+
+    }
+    </script>
+
+    <script>
+        function submit(){
+            confirm("Are you sure to submit?");
+            var today=new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1;
+            if (mm==12){
+                hh="Dec";
+                var day=dd+" "+hh;
+                var table=document.getElementById("customers");
+                var row=table.insertRow(2);
+                var cell1=row.insertCell(0);
+                var cell2=row.insertCell(1);
+                var cell3=row.insertCell(2);
+                var cell4=row.insertCell(3);
+                var cell5=row.insertCell(4);
+                var name=document.getElementById("name").value;
+                var amt=document.getElementById("amount").value;
+                var total="$"+amt;
+                var x=document.getElementById("types").selectedIndex;
+                var y=document.getElementsByTagName("option")[x].value;
+                cell1.innerHTML=day;
+                cell2.innerHTML=y;
+                cell3.innerHTML=name;
+                cell4.innerHTML="";
+                cell5.innerHTML=total;
+            }
+
+
+
+
+        }
+
+
+    </script>
+    {% endblock %}
+
+</body>
+</html>
+
+
